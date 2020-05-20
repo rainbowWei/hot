@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>先进控制云端仿真系统</title>
+    <link rel="stylesheet" href="./css/reset.css">
+    <link rel="stylesheet" href="./css/index.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.staticfile.org/echarts/4.3.0/echarts.min.js"></script>
+
+</head>
+
+<body>
+    <div class="header">
+        <div class="hcontent">
+            <div class="logosubtitle fl">
+                <div class="logo"></div>
+                <div class="subtitle yaxis">| 先 控 仿 真 系 统</div>
+            </div>
+            <div class="timetitle fl clearfix">
+                <div class="title fl">采暖换热系统</div>
+                <div class="statr fl clearfix" id="run">
+                    <div class="icon fl"></div>
+                    <div class="txt fl">开始运行</div>
+                </div>
+                <div class="time fl clearfix">
+                    <div class="icon fl"></div>
+                    <div class="text fl">
+                        <div class="date">11:20:20</div>
+                        <div class="year">2020/02/19</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="content clearfix">
+        <div class="leftline fl"></div>
+        <div class="left fl">
+            <div class="hot">
+                <div class="windsteam">
+                    <ul class="windtxtlist">
+                        <li>二厂区热网管道</li>
+                        <li>三厂区热网管道</li>
+                        <li>备用</li>
+                        <li>供暖回水</li>
+                    </ul>
+                </div>
+                <div class="fristplant">一厂区热网管道</div>
+                <div class="threepumping">三抽来</div>
+                <div class="tapcon">
+                    <div class="tappublic"></div>
+                    <div class="txt">蒸汽阀</div>
+                </div>
+                <ul class="tap information">
+                    <li id="G001"><span class="G001">500</span><b>t/h</b></li>
+                    <li id="T001"><span class="T001">5000</span><b>℃</b></li>
+                </ul>
+                <ul class="pipeline information">
+                    <li id="G002"><span class="G002">500</span><b>t/h</b></li>
+                    <li id="P002"><span class="P002">5000</span><b>MPa</b></li>
+                    <li id="T002"><span class="T002">500.00</span><b>℃</b></li>
+                </ul>
+                <div class="aperture position">
+                    <input type="text" value="70" id="aperture">
+                    <b>%</b>
+                </div>
+            </div>
+            <div class="hotmachine"></div>
+            <div class="cold">
+                <div class="tappublic location"></div>
+                <div class="house"></div>
+                <div class="connect"></div>
+                <div class="pumpswitch">
+                    <div class="pump on onactive" id="on">
+                        <div class="icon fl"></div>
+                        <div class="fl">开始</div>
+                    </div>
+                    <div class="pump off" id="off">
+                        <div class="icon fl"></div>
+                        <div class="fl">停止</div>
+                    </div>
+                </div>
+                <div class="waterbox" id="waterboxbg">
+                    <div class="water" id="water"></div>
+                    <div class="stage">
+                        <span class="number">111.11</span>
+                        <b>m</b>
+                    </div>
+                </div>
+                <div class="tappublic location3"></div>
+                <div class="tappublic location4"></div>
+                <ul class="information position2">
+                    <li><span class="P005" id="P005">5000</span><b>MPa</b></li>
+                    <li><span class="T005" id="T005">500.00</span><b>℃</b></li>
+                </ul>
+                <ul class="information position3">
+                    <li><span class="G003" id="G003">500</span><b>t/h</b></li>
+                    <li><span class="P003">5000</span><b>MPa</b></li>
+                    <li><span class="T003">500.00</span><b>℃</b></li>
+                </ul>
+                <ul class="information position4">
+                    <li><span class="G004">500.00</span><b>t/h</b></li>
+                    <li><span class="P004">5000</span><b>MPa</b></li>
+                    <li><span class="T004">500.00</span><b>℃</b></li>
+                </ul>
+                <ul class="information position5">
+                    <li><span class="G005">500</span><b>t/h</b></li>
+                    <li><span class="P006">5000</span><b>MPa</b></li>
+                    <li><span class="T006">500.00</span><b>℃</b></li>
+                </ul>
+                <ul class="information position6">
+                    <li><span class="P007">5000</span><b>MPa</b></li>
+                    <li><span class="T007">500.00</span><b>℃</b></li>
+                </ul>
+                <ul class="information position7">
+                    <li><span class="G006">500</span><b>t/h</b></li>
+                    <li><span class="P008">5000</span><b>MPa</b></li>
+                    <li><span class="T008">500.00</span><b>℃</b></li>
+                </ul>
+                <ul class="information position8">
+                    <li><span class="G007">500.00</span><b>t/h</b></li>
+                </ul>
+                <div class="aperture position9">
+                    <input type="text" value="80" id="aperture2">
+                    <b>%</b>
+                </div>
+                <div class="aperture position10">
+                    <input type="text" value="85" id="aperture3">
+                    <b>%</b>
+                </div>
+                <div class="aperture position11">
+                    <input type="text" value="60" id="aperture4">
+                    <b>%</b>
+                </div>
+                <p class="hydrophobic">疏水阀</p>
+                <p class="hydrating">补水阀</p>
+                <p class="unloading">排污阀</p>
+            </div>
+        </div>
+        <div class="right fr">
+            <div class="run" id="bbb">
+                <h1>
+                    <span>运行统计</span>
+                    <b></b>
+                    <div class="btnlist clearfix">
+                        <div class="fl" id="keep">保存数据</div>
+                        <div class="fr" id="fetch">调用数据</div>
+                    </div>
+                </h1>
+                <ul class="list">
+                    <li>
+                        <div>
+                            <span class="frist">天气温度</span>
+                            <span class="colorblue T010">500</span>
+                            <span class="unit">℃</span>
+                        </div>
+                        <div>
+                            <span class="second">风力</span>
+                            <span class="colorblue FL">500</span>
+                            <span class="unit">级</span>
+                        </div>
+                        <div>
+                            <span class="third">室内温度</span>
+                            <span class="colorblue T009">500</span>
+                            <span class="unit">℃</span>
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <span class="frist">蒸汽温度</span>
+                            <span class="colorblue T001">500</span>
+                            <span class="unit">℃</span>
+                        </div>
+                        <div>
+                            <span class="second">蒸汽流量</span>
+                            <span class="colorblue G001">500</span>
+                            <span class="unit">t/h</span>
+                        </div>
+                        <div>
+                            <span class="third">蒸汽压力</span>
+                            <span class="colorblue P001">500</span>
+                            <span class="unit">MPa</span>
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <span class="frist">疏水温度</span>
+                            <span class="colorblue T003">500</span>
+                            <span class="unit">℃</span>
+                        </div>
+                        <div>
+                            <span class="second">疏水流量</span>
+                            <span class="colorblue G003">500</span>
+                            <span class="unit">t/h</span>
+                        </div>
+                        <div>
+                            <span class="third">疏水压力</span>
+                            <span class="colorblue P003">500</span>
+                            <span class="unit">MPa</span>
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <span class="frist">进水温度</span>
+                            <span class="colorblue T004">500</span>
+                            <span class="unit">℃</span>
+                        </div>
+                        <div>
+                            <span class="second">进水流量</span>
+                            <span class="colorblue G004">500</span>
+                            <span class="unit">t/h</span>
+                        </div>
+                        <div>
+                            <span class="third">进水压力</span>
+                            <span class="colorblue P004">500</span>
+                            <span class="unit">MPa</span>
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <span class="frist">热水温度</span>
+                            <span class="colorblue T006">5000</span>
+                            <span class="unit">℃</span>
+                        </div>
+                        <div>
+                            <span class="second">热水流量</span>
+                            <span class="colorblue G005">500</span>
+                            <span class="unit">t/h</span>
+                        </div>
+                        <div>
+                            <span class="third">热水压力</span>
+                            <span class="colorblue P006">500</span>
+                            <span class="unit">MPa</span>
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <span class="frist">回水温度</span>
+                            <span class="colorblue T008">500</span>
+                            <span class="unit">℃</span>
+                        </div>
+                        <div>
+                            <span class="second">回水流量</span>
+                            <span class="colorblue G006">500</span>
+                            <span class="unit">t/h</span>
+                        </div>
+                        <div>
+                            <span class="third">回水压力</span>
+                            <span class="colorblue P008">500.00</span>
+                            <span class="unit">MPa</span>
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <span class="frist">换热器液位</span>
+                            <span class="colorblue HRQL">500</span>
+                            <span class="unit">m</span>
+                        </div>
+                        <div>
+                            <span class="second">水箱液位</span>
+                            <span class="colorblue L002">500.00</span>
+                            <span class="unit">m</span>
+                        </div>
+                        <div>
+                            <span class="third">管网温度下限</span>
+                            <span class="colorblue PTMIN">500</span>
+                            <span class="unit">℃</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="census">
+                <h1>
+                    <span>统计参数</span>
+                    <b></b>
+                    <div class="change clearfix">
+                        <div class="on fl" id="censusStart">开始统计</div>
+                        <div class="fr" id="censusClear">统计清零</div>
+                    </div>
+                </h1>
+                <ul class="censuslist">
+                    <li>
+                        <span>天气温度</span>
+                        <span>平均值
+                            <b class="TEA_PJ">000.00</b>℃</span>
+                        <span>最高值
+                            <b class="TEA_MAX">000.00</b>℃</span>
+                        <span>最低值
+                            <b class="TEA_MIN">000.00</b>℃</span>
+                    </li>
+                    <li>
+                        <span>热水温度</span>
+                        <span>平均值
+                            <b class="RST_PJ">000.00</b>℃</span>
+                        <span>最高值
+                            <b class="RST_MAX">000.00</b>℃</span>
+                        <span>最低值
+                            <b class="RST_MIN">000.00</b>℃</span>
+                    </li>
+                    <li>
+                        <span>室内温度</span>
+                        <span>平均值
+                            <b class="SNT_PJ">000.00</b>℃</span>
+                        <span>最高值
+                            <b class="SNT_MAX">000.00</b>℃</span>
+                        <span>最低值
+                            <b class="SNT_MIN">000.00</b>℃</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="census check">
+                <h1>
+                    <span>考核参数</span>
+                    <b></b>
+                    <div class="change clearfix">
+                        <div class="fl" id="checkStart">开始统计</div>
+                        <div class="on fr" id="checkClear">统计清零</div>
+                    </div>
+                </h1>
+                <div class="checkcon">
+                    <div class="circle clearfix">
+                        <div class="hotw fl">
+                            <span>热水温度稳态占比</span>
+                            <i id="hotw"></i>
+                        </div>
+                        <div class="dabiao fl">
+                            <span>室内温度达标率</span>
+                            <i id="circle"></i>
+                        </div>
+                        <div class="sicon fl">
+                            <span>先控自动占比</span>
+                            <i id="sicon"></i>
+                        </div>
+                    </div>
+                    <div class="target clearfix">
+                        <div class="norm fl">
+                            <span>控制性能指标</span>
+                            <i id="progressbg"><b id="progress"></b></i>
+                        </div>
+                    </div>
+                    <div class="btn clearfix">
+                        <ul>
+                            <li id="btn1">温度Xk投入</li>
+                            <li id="btn2" class="show">温度Xk切除</li>
+
+                        </ul>
+                        <ul>
+                            <li id="btn3">给水Xk投入</li>
+                            <li id="btn4" class="show">给水Xk切除</li>
+                        </ul>
+                        <ul>
+                            <li id="btn5">补水Xk投入</li>
+                            <li id="btn6" class="show">补水Xk切除</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="popup">
+        <div class="popupcon">
+            <div class="popheader clearfix">
+                <ul class="tab fl clearfix">
+                    <li class="on">实时数据</li>
+                    <li>历史数据</li>
+                </ul>
+                <ul class="setclose fr">
+                    <li class="set h-btn fl"></li>
+                    <li class="close h-btn fr"></li>
+                </ul>
+            </div>
+            <div class="tablist">
+                <div id="popupactual" class="showcontent" style="height:56vh;width:69vw ; font-size: 1.11vh;"></div>
+                <div id="popuphistory" style="height:56vh;width:69vw ; font-size: 1.11vh;"></div>
+            </div>
+        </div>
+    </div>
+    <OBJECT ID="RSFZ_Main" CLASSID="CLSID:19B84666-6B83-4623-943B-3212F05EAFF1" width="0" height="0"
+        CODEBASE="HotWater-1.0.5-Setup.CAB#version=1,0,5,0"></OBJECT>
+    <OBJECT ID="Program" CLASSID="CLSID:EFEB0C9E-ED73-4DB5-8C1E-30DAA7A763D7" width="0" height="0"
+        CODEBASE="OpcUaServer_RSFZ-1.0.0-Setup.CAB#version=1,0,0,0"></OBJECT>
+    <script src="./js/index.js"></script>
+    <script src="./js/popup.js"></script>
+
+</body>
+
+</html>
