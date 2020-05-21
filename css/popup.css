@@ -1,0 +1,156 @@
+/* 弹窗样式 */
+
+.popup{
+  width:100%;
+  height:100%;
+  position:fixed;
+  top:0;
+  left:0;
+  background: rgba(41, 44, 47, 0.6);
+  z-index:100000;
+  /* display: none; */
+  /* display: block; */
+  }
+.popupcon{
+  height:64.81vh;
+  width:70.78vw;
+  background: #222e33;
+  position:fixed;
+  top:50%;
+  left:50%;
+  margin-left: -35.39vw;
+  margin-top: -32.405vh;
+  color: #fff;
+  }
+  .popheader{
+     font-size: 2.03vh;
+     padding:2.40vh 1.45vw 1.85vh 1.56vw;
+     box-sizing: border-box;
+  }
+  .popheader .tab{
+     position: relative;
+     height: 3.70vh;
+  }
+  .popheader .tab li{
+     float: left;
+     width: 6.4vw;
+     height: 100%;
+     text-align: center;
+  }
+  .popheader .tab .on{
+     width: 6.4vw;
+     height: 100%;
+     color: #01f2c7;
+     background: url(../images/tab-bg.png);
+     background-size: 100% 100%;
+
+  }
+  .popheader .h-btn{
+     width: 2.31vh;
+     height: 2.31vh;
+     margin-top: 0.74vh;
+  }
+  .popheader .close{
+     background: url(../images/close.png);
+     background-size: 100% 100%;
+     
+  }
+  .popheader .set{
+     background: url(../images/set.png);
+     background-size: 100% 100%;
+     margin-right: 0.78vw;
+  }
+  .popheader .sss{
+    position: relative;
+  }
+  .popheader .setpopup{
+    width: 15.05vw;
+    height: 46.76vh;
+    background: #2a393f;
+    padding-top: 2.31vh;
+    box-sizing: border-box;
+    position: absolute;
+    right: 1vw;
+    top: 3.1vh;
+    z-index: 2000;
+    overflow: auto;
+  }
+  /* 自定义复选框样式 */
+  .square-check{
+    width: 7.4vw;
+    height: 1.8vh;
+    float: left;
+    font-size: 1.48vh;
+    text-overflow:ellipsis;
+    overflow: hidden;
+    margin-bottom: 1.11vh;
+  }
+  .square-check>input[type="checkbox"] {
+    width: 1.48vh;
+    height: 1.48vh;
+    display: inline-block;
+    text-align: center;
+    vertical-align: baseline;
+    line-height: 1.8vh;
+    position: relative;
+    outline: none;
+    -webkit-appearance: none;
+    margin:0 0.78vw 0 1.3vw;
+  }
+  .square-check>input[type="checkbox"]::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: #2a393f;
+    width: 100%;
+    height: 100%;
+    border: 1px solid #fff;
+    color: #fff;
+    border-radius: 3px;
+  }
+  .square-check>input[type="checkbox"]:hover::before {
+    border-color: #01f2c7;
+  }
+  .square-check>input[type="checkbox"]:checked::before {
+    content: "\2713";
+    background-color: #01f2c7;
+    border: 1px solid #01f2c7;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    color: #fff;
+    font-size: 1.86vh;
+  }
+  .square-check>input[type="checkbox"]:disabled::before {
+    background: #eee;
+    cursor: default;
+  }
+  .popupmine{
+      width: 100%;
+      height: 39.81vh;
+  }
+  .tablist{
+      position: relative;
+  }
+
+  .tablist>div{
+      opacity: 0;
+      position: absolute;
+      top:0;
+      left:0;
+  }
+  .tablist .mask{
+      height:56vh;
+      width:69vw;
+      z-index: 999;
+      opacity: 0;
+      position: absolute;
+      top:0;
+      left:0;
+  }
+  .tablist .showcontent{
+      opacity: 1;
+      z-index: 1000;
+  }

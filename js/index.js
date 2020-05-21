@@ -444,14 +444,7 @@
     }
     //设定初始值
     RSFZ_Main.CN_S001T = 1;
-    trendFun(".tap", "#G001")
-    trendFun(".tap", "#T001")
-    function trendFun(parent, children) {
-        $(parent).on('click', children, function () {
-            alert('1111')
-            $(this).addClass("aaaa")
-        });
-    }
+    
     //泵开关的操作
     $("#on").on('click', function () {
         RSFZ_Main.CN_S001T = 1;
@@ -637,6 +630,9 @@
         myChart = echarts.init(document.getElementById(obj.domId));
         // 使用刚指定的配置项和数据显示图表
         myChart.setOption(option);
+        window.addEventListener("resize",function(){
+            myChart.resize();
+        });
     }
     // 室内温度达标率
     function onWaterChange2(obj) {
@@ -674,6 +670,9 @@
         myChart2 = echarts.init(document.getElementById(obj.domId));
         // 使用刚指定的配置项和数据显示图表
         myChart2.setOption(option);
+        window.addEventListener("resize",function(){
+            myChart2.resize();
+        });
     }
     // 先控自动占比
     function onWaterChange3(obj) {
@@ -711,7 +710,10 @@
         myChart3 = echarts.init(document.getElementById(obj.domId));
         // 使用刚指定的配置项和数据显示图表
         myChart3.setOption(option);
+        window.addEventListener("resize",function(){
+            myChart3.resize();
+        });
     }
-    
+
     // Program.main();
 });

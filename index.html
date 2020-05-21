@@ -7,6 +7,7 @@
     <title>先进控制云端仿真系统</title>
     <link rel="stylesheet" href="./css/reset.css">
     <link rel="stylesheet" href="./css/index.css">
+    <link rel="stylesheet" href="./css/popup.css">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.staticfile.org/echarts/4.3.0/echarts.min.js"></script>
 
@@ -93,35 +94,35 @@
                 <div class="tappublic location3"></div>
                 <div class="tappublic location4"></div>
                 <ul class="information position2">
-                    <li><span class="P005" id="P005">5000</span><b>MPa</b></li>
-                    <li><span class="T005" id="T005">500.00</span><b>℃</b></li>
+                    <li id="P005"><span class="P005">5000</span><b>MPa</b></li>
+                    <li id="T005"><span class="T005">500.00</span><b>℃</b></li>
                 </ul>
                 <ul class="information position3">
-                    <li><span class="G003" id="G003">500</span><b>t/h</b></li>
-                    <li><span class="P003">5000</span><b>MPa</b></li>
-                    <li><span class="T003">500.00</span><b>℃</b></li>
+                    <li id="G003"><span class="G003">500</span><b>t/h</b></li>
+                    <li id="P003"><span class="P003">5000</span><b>MPa</b></li>
+                    <li id="T003"><span class="T003">500.00</span><b>℃</b></li>
                 </ul>
                 <ul class="information position4">
-                    <li><span class="G004">500.00</span><b>t/h</b></li>
-                    <li><span class="P004">5000</span><b>MPa</b></li>
-                    <li><span class="T004">500.00</span><b>℃</b></li>
+                    <li id="G004"><span class="G004">500.00</span><b>t/h</b></li>
+                    <li id="P004"><span class="P004">5000</span><b>MPa</b></li>
+                    <li id="T004"><span class="T004">500.00</span><b>℃</b></li>
                 </ul>
                 <ul class="information position5">
-                    <li><span class="G005">500</span><b>t/h</b></li>
-                    <li><span class="P006">5000</span><b>MPa</b></li>
-                    <li><span class="T006">500.00</span><b>℃</b></li>
+                    <li id="G005"><span class="G005">500</span><b>t/h</b></li>
+                    <li id="P006"><span class="P006">5000</span><b>MPa</b></li>
+                    <li id="T006"><span class="T006">500.00</span><b>℃</b></li>
                 </ul>
                 <ul class="information position6">
-                    <li><span class="P007">5000</span><b>MPa</b></li>
-                    <li><span class="T007">500.00</span><b>℃</b></li>
+                    <li id="P007"><span class="P007">5000</span><b>MPa</b></li>
+                    <li id="T007"><span class="T007">500.00</span><b>℃</b></li>
                 </ul>
                 <ul class="information position7">
-                    <li><span class="G006">500</span><b>t/h</b></li>
-                    <li><span class="P008">5000</span><b>MPa</b></li>
-                    <li><span class="T008">500.00</span><b>℃</b></li>
+                    <li id="G006"><span class="G006">500</span><b>t/h</b></li>
+                    <li id="P008"><span class="P008">5000</span><b>MPa</b></li>
+                    <li id="T008"><span class="T008">500.00</span><b>℃</b></li>
                 </ul>
                 <ul class="information position8">
-                    <li><span class="G007">500.00</span><b>t/h</b></li>
+                    <li id="G007"><span class="G007">500.00</span><b>t/h</b></li>
                 </ul>
                 <div class="aperture position9">
                     <input type="text" value="80" id="aperture2">
@@ -335,8 +336,8 @@
                             <i id="sicon"></i>
                         </div>
                     </div>
-                    <div class="target clearfix">
-                        <div class="norm fl">
+                    <div class="target">
+                        <div class="norm clearfix">
                             <span>控制性能指标</span>
                             <i id="progressbg"><b id="progress"></b></i>
                         </div>
@@ -367,14 +368,32 @@
                     <li class="on">实时数据</li>
                     <li>历史数据</li>
                 </ul>
-                <ul class="setclose fr">
-                    <li class="set h-btn fl"></li>
-                    <li class="close h-btn fr"></li>
-                </ul>
+                <div class="setclose fr">
+                    <div class="sss fl">
+                        <div class="set h-btn"></div>
+                        <div class="setpopup">
+                            <div class="square-check">
+                                <input type="checkbox" name="setvalue" value="123" />的快乐军都山的
+                            </div>
+                            <div class="square-check">
+                                <input type="checkbox" name="setvalue" value="33" />123
+                            </div>
+                            <div class="square-check">
+                                <input type="checkbox" name="setvalue" value="1223" />的快乐军都山的
+                            </div>
+                            <div class="square-check">
+                                <input type="checkbox" name="setvalue" value="1233" />123
+                            </div>
+                        </div>
+                    </div>
+                    <div class="close h-btn fr" id="close"></div>
+
+                </div>
             </div>
             <div class="tablist">
                 <div id="popupactual" class="showcontent" style="height:56vh;width:69vw ; font-size: 1.11vh;"></div>
                 <div id="popuphistory" style="height:56vh;width:69vw ; font-size: 1.11vh;"></div>
+                <p class="mask"></p>
             </div>
         </div>
     </div>
