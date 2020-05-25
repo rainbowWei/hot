@@ -8,8 +8,11 @@
     <link rel="stylesheet" href="./css/reset.css">
     <link rel="stylesheet" href="./css/index.css">
     <link rel="stylesheet" href="./css/popup.css">
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://cdn.staticfile.org/echarts/4.3.0/echarts.min.js"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script> -->
+    <!-- <script src="https://cdn.staticfile.org/echarts/4.3.0/echarts.min.js"></script> -->
+    <script src="./js/utils/jquery-3.3.1.min.js"></script>
+    <!-- <script src="./js/utils/echarts.min.js"></script> -->
+    <script src="./js/utils/echarts.v4-3-0.min.js"></script>
 
 </head>
 
@@ -360,6 +363,7 @@
                 </div>
             </div>
         </div>
+        <div id="main" style="height:300px;"></div>
     </div>
     <div class="popup">
         <div class="popupcon">
@@ -370,20 +374,41 @@
                 </ul>
                 <div class="setclose fr">
                     <div class="sss fl">
-                        <div class="set h-btn"></div>
+                        <div class="set h-btn" id="setBtn"></div>
                         <div class="setpopup">
-                            <div class="square-check">
-                                <input type="checkbox" name="setvalue" value="123" />的快乐军都山的
-                            </div>
-                            <div class="square-check">
-                                <input type="checkbox" name="setvalue" value="33" />123
-                            </div>
-                            <div class="square-check">
-                                <input type="checkbox" name="setvalue" value="1223" />的快乐军都山的
-                            </div>
-                            <div class="square-check">
-                                <input type="checkbox" name="setvalue" value="1233" />123
-                            </div>
+                            <label class="square-check">
+                                <input type="checkbox" name="setvalue" value="123" /><span>的快乐军都山的</span>                            </label>
+                            <label class="square-check">
+                                <input type="checkbox" name="setvalue" value="33" /><span>123</span>
+                            </label>
+                            <label class="square-check">
+                                <input type="checkbox" name="setvalue" value="1223" /><span>的快乐军都山的</span>
+                            </label>
+                            <label class="square-check">
+                                <input type="checkbox" name="setvalue" value="1233" /><span>123</span>
+                            </label>
+                            <label class="square-check">
+                                <input type="checkbox" name="setvalue" value="123" /><span>的快乐军都山的</span>                            </label>
+                            <label class="square-check">
+                                <input type="checkbox" name="setvalue" value="33" /><span>123</span>
+                            </label>
+                            <label class="square-check">
+                                <input type="checkbox" name="setvalue" value="1223" /><span>的快乐军都山的</span>
+                            </label>
+                            <label class="square-check">
+                                <input type="checkbox" name="setvalue" value="1233" /><span>123</span>
+                            </label>
+                            <label class="square-check">
+                                <input type="checkbox" name="setvalue" value="123" /><span>的快乐军都山的</span>                            </label>
+                            <label class="square-check">
+                                <input type="checkbox" name="setvalue" value="33" /><span>123</span>
+                            </label>
+                            <label class="square-check">
+                                <input type="checkbox" name="setvalue" value="1223" /><span>的快乐军都山的</span>
+                            </label>
+                            <label class="square-check">
+                                <input type="checkbox" name="setvalue" value="1233" /><span>123</span>
+                            </label>
                         </div>
                     </div>
                     <div class="close h-btn fr" id="close"></div>
@@ -395,6 +420,7 @@
                 <div id="popuphistory" style="height:56vh;width:69vw ; font-size: 1.11vh;"></div>
                 <p class="mask"></p>
             </div>
+            
         </div>
     </div>
     <OBJECT ID="RSFZ_Main" CLASSID="CLSID:19B84666-6B83-4623-943B-3212F05EAFF1" width="0" height="0"
@@ -403,7 +429,5 @@
         CODEBASE="OpcUaServer_RSFZ-1.0.0-Setup.CAB#version=1,0,0,0"></OBJECT>
     <script src="./js/index.js"></script>
     <script src="./js/popup.js"></script>
-
 </body>
-
 </html>

@@ -22,17 +22,18 @@ $(document).ready(function () {
   trendFun(".position7", "#P008")
   trendFun(".position7", "#T008")
   trendFun(".position8", "#G007")
-  
+
   function trendFun(parent, children) {
-      $(parent).on('click', children, function () {
-          $(".popup").css('display','block')
-          $(this).addClass("active")
-      });
+    $(parent).on('click', children, function () {
+      $(".popup").css('display', 'block')
+      $(this).addClass("active")
+
+    });
   }
 
   //关闭弹窗
-  $("#close").click(function(){
-    $(".popup").css('display','none')
+  $("#close").click(function () {
+    $(".popup").css('display', 'none')
   })
 
   //选项卡效果
@@ -43,7 +44,7 @@ $(document).ready(function () {
     $(this).siblings().removeClass("on");
     //3.获取当前li元素的索引
     var $index = $(this).index();
-    console.log($index,"索引值")
+    console.log($index, "索引值")
     //4.获取对应的ul中的li元素对象
     var $eq = $(".tablist>div").eq($index);
     //5.获取z-index的值
@@ -53,19 +54,97 @@ $(document).ready(function () {
     //7.获取当前对象的所有同级元素的集合，并隐藏
     $eq.siblings('div').removeClass("showcontent").css("z-index", parseInt(Zindex) - 1);
   });
-
+  //点击设置按钮
+  var onOff4 = 1;
+  $("#setBtn").on('click', function () {
+    if (onOff4 == 1) {
+      $('.setpopup').css('display', 'block')
+      onOff4 = 0;
+    } else {
+      $('.setpopup').css('display', 'none')
+      selectedFun();
+      onOff4 = 1;
+    }
+  })
+  var colorCount = 0;
+  var COLOR = [
+    { used: false, value: '#ffff00' },
+    { used: false, value: '#55b2f9' },
+    { used: false, value: '#e687b6' },
+    { used: false, value: '#55f9c9' },
+    { used: false, value: '#759aa0' },
+    { used: false, value: '#e69d87' },
+    { used: false, value: '#8dc1a9' },
+    { used: false, value: '#ea7e53' }
+  ];
+  $("input[name=setvalue]").on('click', function () {
+    if (this.checked) {
+      // 最多可选8个指标
+      if (colorCount >= 8) {
+        this.checked = false;
+        return;
+      }
+      var tempColor = void 0;
+      for (var i = 0; i < COLOR.length; i++) {
+        var co = COLOR[i];
+        if (!co.used) {
+          tempColor = co.value;
+          co.used = true;
+          colorCount++;
+          break;
+        }
+      }
+      console.log(COLOR, tempColor);
+      $(this).parent().css({
+        color: tempColor
+      }).attr('color', tempColor);
+    } else {
+      var oldColor = $(this).parent().attr('color');
+      for (var i = 0; i < COLOR.length; i++) {
+        var co = COLOR[i];
+        if (oldColor === co.value) {
+          co.used = false
+          break;
+        }
+      }
+      $(this).parent().css({
+        color: '#fff'
+      }).attr('color', '#fff');
+      colorCount--;
+    }
+  })
+  function selectedFun() {
+    var selected = new Array();
+    var colorCountTemp = 0;
+    $("input[name=setvalue]").each(function (i, d) {
+      if (d.checked) {
+        selected.push(d.value);
+        colorCountTemp++;
+      }
+    })
+    colorCount = colorCountTemp;
+    // alert(selected, "存储的值")
+  }
   //当前视口宽度
   let nowClientWidth = document.documentElement.clientWidth;
   //换算方法
-  function nowSize(val, initWidth = 1920) {
-    return val * (nowClientWidth / initWidth);
+  function nowSize(val) {
+    return val * (nowClientWidth / 1920);
   }
 
- 
   getChart('popupactual')
   getChart1('popuphistory')
   function getChart(chartId) {
     var myChartObj = echarts.init(document.getElementById(chartId));
+
+    function randomData() {
+      return now = new Date();
+    }
+    var data = [];
+    // var now = +new Date(2020, 5, 20);
+    for (var i = 0; i < 1000; i++) {
+      data.push(randomData());
+    }
     var option = {
       color: ['#ffff00', '#55b2f9', '#e687b6', '#55f9c9', '#759aa0', '#e69d87', '#8dc1a9', '#ea7e53'],
       tooltip: {},
@@ -128,14 +207,18 @@ $(document).ready(function () {
         },
       ],
       xAxis: {
-        boundaryGap: false,
-        axisLine: { onZero: false },
-        type: 'category',
-        data: [
-          '2009/6/12 2:00', '2009/6/12 3:00', '2009/6/12 4:00', '2009/6/12 5:00', '2009/6/12 6:00', '2009/6/12 7:00', '2009/6/12 8:00', '2009/6/12 9:00', '2009/6/12 10:00', '2009/6/12 11:00', '2009/6/12 12:00', '2009/6/12 13:00', '2009/6/12 14:00',
-        ].map(function (str) {
-          return str.replace(' ', '\n');
-        }),
+        type: 'time',
+        splitLine: {
+          show: false
+        },
+        // boundaryGap: false,
+        // axisLine: { onZero: false },
+        // type: 'category',
+        // data: [
+        //   '2009/6/12 2:00', '2009/6/12 3:00', '2009/6/12 4:00', '2009/6/12 5:00', '2009/6/12 6:00', '2009/6/12 7:00', '2009/6/12 8:00', '2009/6/12 9:00', '2009/6/12 10:00', '2009/6/12 11:00', '2009/6/12 12:00', '2009/6/12 13:00', '2009/6/12 14:00',
+        // ].map(function (str) {
+        //   return str.replace(' ', '\n');
+        // }),
         axisLabel: {
           show: true,
           textStyle: {
@@ -159,9 +242,9 @@ $(document).ready(function () {
         }
       },
       series: [{
-        data: [820, 932, 901, 934, 1290, 1330, 1320, 820, 932, 901, 934, 1290, 1330],
+        data: data,
         type: 'line',
-        name: '设定值',
+        // name: '设定值',
         symbol: 'circle',
         itemStyle: {
           normal: {
@@ -171,103 +254,23 @@ $(document).ready(function () {
           }
         }
       },
-      {
-        data: [300, 580, 450, 345, 690, 487, 653, 234, 977, 243, 100, 570, 890],
-        type: 'line',
-        name: '测量值',
-        symbol: 'circle',
-        itemStyle: {
-          normal: {
-            lineStyle: {
-              width: 1// 0.1的线条是非常细的了
-            }
-          }
-        }
-      },
-      {
-        data: [700, 500, 690, 345, 890, 987, 853, 234, 777, 343, 700, 500, 690],
-        type: 'line',
-        name: '总输出',
-        symbol: 'circle',
-        itemStyle: {
-          normal: {
-            lineStyle: {
-              width: 1// 0.1的线条是非常细的了
-            }
-          }
-        }
-      },
-      {
-        data: [500, 700, 490, 845, 290, 587, 353, 634, 477, 543, 900, 300, 890],
-        type: 'line',
-        name: 'PID',
-        symbol: 'circle',
-        itemStyle: {
-          normal: {
-            lineStyle: {
-              width: 1// 0.1的线条是非常细的了
-            }
-          }
-        }
-      },
-      {
-        data: [400, 520, 890, 345, 690, 787, 953, 434, 377, 253, 670, 245, 670],
-        type: 'line',
-        name: '观测器',
-        symbol: 'circle',
-        itemStyle: {
-          normal: {
-            lineStyle: {
-              width: 1// 0.1的线条是非常细的了
-            }
-          }
-        }
-      },
-      {
-        data: [270, 500, 654, 555, 345, 965, 333, 231, 390, 453, 544, 600, 390],
-        type: 'line',
-        name: '重叠',
-        symbol: 'circle',
-        itemStyle: {
-          normal: {
-            lineStyle: {
-              width: 1// 0.1的线条是非常细的了
-            }
-          }
-        }
-      },
-      {
-        data: [240, 670, 854, 324, 567, 435, 379, 568, 754, 325, 456, 715, 678],
-        type: 'line',
-        name: 'RSF',
-        symbol: 'circle',
-        itemStyle: {
-          normal: {
-            lineStyle: {
-              width: 1// 0.1的线条是非常细的了
-            }
-          }
-        }
-      },
-      {
-        data: [270, 500, 654, 555, 345, 965, 333, 231, 390, 453, 544, 600, 390],
-        type: 'line',
-        name: '观测器动态',
-        symbol: 'circle',
-        itemStyle: {
-          normal: {
-            lineStyle: {
-              width: 1// 0.1的线条是非常细的了
-            }
-          }
-        }
-      }
       ]
     };
     myChartObj.setOption(option);
-    window.addEventListener("resize",function(){
+    window.addEventListener("resize", function () {
       myChartObj.resize();
     });
+    setInterval(function () {
+      for (var i = 0; i < 8; i++) {
+        data.shift();
+        data.push(randomData());
+      }
+      myChartObj.setOption({
+        series: [{
+          data: data
+        }]
+      });
+    }, 1000);
   }
   function getChart1(chartId) {
     var myChartObj2 = echarts.init(document.getElementById(chartId));
@@ -418,11 +421,8 @@ $(document).ready(function () {
       ]
     };
     myChartObj2.setOption(option);
-    window.addEventListener("resize",function(){
+    window.addEventListener("resize", function () {
       myChartObj2.resize();
     });
   }
-
-
-  // echart.setOption(option);
 })
