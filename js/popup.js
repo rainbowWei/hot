@@ -1,41 +1,5 @@
 $(document).ready(function () {
 
-  trendFun(".tap", "#G001")
-  trendFun(".tap", "#T001")
-  trendFun(".pipeline", "#G002")
-  trendFun(".pipeline", "#P002")
-  trendFun(".pipeline", "#T002")
-  trendFun(".position2", "#P005")
-  trendFun(".position2", "#T005")
-  trendFun(".position3", "#G003")
-  trendFun(".position3", "#P003")
-  trendFun(".position3", "#T003")
-  trendFun(".position4", "#G004")
-  trendFun(".position4", "#P004")
-  trendFun(".position4", "#T004")
-  trendFun(".position5", "#T004")
-  trendFun(".position5", "#T004")
-  trendFun(".position5", "#T004")
-  trendFun(".position6", "#P007")
-  trendFun(".position6", "#T007")
-  trendFun(".position7", "#G006")
-  trendFun(".position7", "#P008")
-  trendFun(".position7", "#T008")
-  trendFun(".position8", "#G007")
-
-  function trendFun(parent, children) {
-    $(parent).on('click', children, function () {
-      $(".popup").css('display', 'block')
-      $(this).addClass("active")
-
-    });
-  }
-
-  //关闭弹窗
-  $("#close").click(function () {
-    $(".popup").css('display', 'none')
-  })
-
   //选项卡效果
   $(".tab>li").click(function () {
     //1.获取鼠标移入的对象并让当前对象显示
@@ -132,146 +96,123 @@ $(document).ready(function () {
     return val * (nowClientWidth / 1920);
   }
 
-  getChart('popupactual')
+ 
   getChart1('popuphistory')
-  function getChart(chartId) {
-    var myChartObj = echarts.init(document.getElementById(chartId));
+  // function getChart(chartId) {
+  //   var myChartObj = echarts.init(document.getElementById(chartId));
 
-    function randomData() {
-      return now = new Date();
-    }
-    var data = [];
-    // var now = +new Date(2020, 5, 20);
-    for (var i = 0; i < 1000; i++) {
-      data.push(randomData());
-    }
-    var option = {
-      color: ['#ffff00', '#55b2f9', '#e687b6', '#55f9c9', '#759aa0', '#e69d87', '#8dc1a9', '#ea7e53'],
-      tooltip: {},
-      legend: {
-        top: '0',
-        textStyle: {
-          color: '#ffffff',
-          fontSize: nowSize(16)
-        },
-      },
-      grid: {
-        top: '30',
-        left: '60',
-        right: '30',
-        bottom: '80',
-      },
-      lineStyle: {
-        width: 1
-      },
-      dataZoom: [
-        {
-          start: 30,
-          end: 85,
-          height: 24,//这里可以设置dataZoom的尺寸
-          textStyle: {
-            color: '#ffffff',
-            fontSize: nowSize(16)
-          },
-          dataBackground: {
-            lineStyle: {
-              color: [
-                "#f1f1f1"
-              ],
-            },
-            areaStyle: {
-              color: [
-                "#626871"
-              ],
-              opacity: 0.5
-            }
-          }
-        }, {
-          type: 'inside'
-        }
-      ],
-      yAxis: [
-        {
-          type: 'value',
-          axisLabel: {
-            textStyle: {
-              color: '#ffffff',
-              fontSize: nowSize(16)
-            }
-          },
-          axisLine: {
-            lineStyle: {
-              color: '#fff',     //X轴的颜色
-            },
-          },
-        },
-      ],
-      xAxis: {
-        type: 'time',
-        splitLine: {
-          show: false
-        },
-        // boundaryGap: false,
-        // axisLine: { onZero: false },
-        // type: 'category',
-        // data: [
-        //   '2009/6/12 2:00', '2009/6/12 3:00', '2009/6/12 4:00', '2009/6/12 5:00', '2009/6/12 6:00', '2009/6/12 7:00', '2009/6/12 8:00', '2009/6/12 9:00', '2009/6/12 10:00', '2009/6/12 11:00', '2009/6/12 12:00', '2009/6/12 13:00', '2009/6/12 14:00',
-        // ].map(function (str) {
-        //   return str.replace(' ', '\n');
-        // }),
-        axisLabel: {
-          show: true,
-          textStyle: {
-            color: '#ffffff',
-            fontSize: nowSize(16)
-          },
-        },
-        axisLine: {
-          lineStyle: {
-            color: '#fff'     //X轴的颜色
-          },
-        },
-        splitArea: {
-          show: true,
-          areaStyle: {
-            color: [
-              "#1e292d"
-            ],
-            opacity: 0.9
-          }
-        }
-      },
-      series: [{
-        data: data,
-        type: 'line',
-        // name: '设定值',
-        symbol: 'circle',
-        itemStyle: {
-          normal: {
-            lineStyle: {
-              width: 1// 0.1的线条是非常细的了
-            }
-          }
-        }
-      },
-      ]
-    };
-    myChartObj.setOption(option);
-    window.addEventListener("resize", function () {
-      myChartObj.resize();
-    });
-    setInterval(function () {
-      for (var i = 0; i < 8; i++) {
-        data.shift();
-        data.push(randomData());
-      }
-      myChartObj.setOption({
-        series: [{
-          data: data
-        }]
-      });
-    }, 1000);
-  }
+  //   function randomData() {
+  //     return now = new Date();
+  //   }
+  //   var data = [];
+  //   // var now = +new Date(2020, 5, 20);
+  //   for (var i = 0; i < 1000; i++) {
+  //     data.push(randomData());
+  //   }
+  //   var option = {
+  //     color: ['#ffff00', '#55b2f9', '#e687b6', '#55f9c9', '#759aa0', '#e69d87', '#8dc1a9', '#ea7e53'],
+  //     tooltip: {},
+  //     legend: {
+  //       top: '0',
+  //       textStyle: {
+  //         color: '#ffffff',
+  //         fontSize: nowSize(16)
+  //       },
+  //     },
+  //     grid: {
+  //       top: '30',
+  //       left: '60',
+  //       right: '30',
+  //       bottom: '80',
+  //     },
+  //     lineStyle: {
+  //       width: 1
+  //     },
+  //     yAxis: [
+  //       {
+  //         type: 'value',
+  //         axisLabel: {
+  //           textStyle: {
+  //             color: '#ffffff',
+  //             fontSize: nowSize(16)
+  //           }
+  //         },
+  //         axisLine: {
+  //           lineStyle: {
+  //             color: '#fff',     //X轴的颜色
+  //           },
+  //         },
+  //       },
+  //     ],
+  //     xAxis: {
+  //       type: 'time',
+  //       splitLine: {
+  //         show: false
+  //       },
+  //       // boundaryGap: false,
+  //       // axisLine: { onZero: false },
+  //       // type: 'category',
+  //       // data: [
+  //       //   '2009/6/12 2:00', '2009/6/12 3:00', '2009/6/12 4:00', '2009/6/12 5:00', '2009/6/12 6:00', '2009/6/12 7:00', '2009/6/12 8:00', '2009/6/12 9:00', '2009/6/12 10:00', '2009/6/12 11:00', '2009/6/12 12:00', '2009/6/12 13:00', '2009/6/12 14:00',
+  //       // ].map(function (str) {
+  //       //   return str.replace(' ', '\n');
+  //       // }),
+  //       axisLabel: {
+  //         show: true,
+  //         textStyle: {
+  //           color: '#ffffff',
+  //           fontSize: nowSize(16)
+  //         },
+  //       },
+  //       axisLine: {
+  //         lineStyle: {
+  //           color: '#fff'     //X轴的颜色
+  //         },
+  //       },
+  //       splitArea: {
+  //         show: true,
+  //         areaStyle: {
+  //           color: [
+  //             "#1e292d"
+  //           ],
+  //           opacity: 0.9
+  //         }
+  //       }
+  //     },
+  //     series: [{
+  //       data: data,
+  //       type: 'line',
+  //       // name: '设定值',
+  //       symbol:"none",   //去掉折线上的小圆点
+  //       showAllSymbol: true, //标注所有数据点,
+  //       itemStyle: {
+  //         normal: {
+  //           lineStyle: {
+  //             width: 1  //0.1的线条是非常细的了
+  //           }
+  //         }
+  //       }
+  //     },
+  //     ]
+  //   };
+  //   myChartObj.setOption(option);
+  //   window.addEventListener("resize", function () {
+  //     myChartObj.resize();
+  //   });
+  //   setInterval(function () {
+  //     for (var i = 0; i < 20; i++) {
+  //       data.shift();
+  //       data.push(randomData());
+  //     }
+  //     myChartObj.setOption({
+  //       series: [{
+  //         data: data
+  //       }]
+  //     });
+  //   }, 1000);
+  // }
+ 
+
   function getChart1(chartId) {
     var myChartObj2 = echarts.init(document.getElementById(chartId));
     var option = {

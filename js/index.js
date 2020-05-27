@@ -1,11 +1,20 @@
 ﻿$(document).ready(function () {
+    var dataObj = {}
     var intervalID = null;
     var waterBoxBg = $("#waterboxbg").height(); // 水箱总高度
     var progressBg = $("#progressbg").width(); // 控制性能指标宽度
+    var arr = new Array();
+    //当前视口宽度
+    let nowClientWidth = document.documentElement.clientWidth;
+    //换算方法
+    function nowSize(val) {
+        return val * (nowClientWidth / 1920);
+    }
 
     var myChart;
     var myChart2;
     var myChart3;
+    var myChartObj;
     // 时钟
     setInterval(function () {
         var newDate = new Date();                // 获取当前时间
@@ -22,7 +31,7 @@
         $(".year").text(year);
         $(".date").text(date);
     }, 1000)
-    
+
     //个位补零函数
     function Appendzero(obj) {
         return (obj < 10) ? "0" + obj : obj;
@@ -78,7 +87,7 @@
         //模型的主运行函数
         RSFZ_Main.CLSCN(RSFZ_Main.CN_M001VS, 0, RSFZ_Main.CN_M003VS, RSFZ_Main.CN_M004VS, RSFZ_Main.CN_M005VS, RSFZ_Main.CN_S001T)
         //刷新界面显示
-        var dataObj = {
+        dataObj = {
             T010: RSFZ_Main.CN_T010,  // 天气温度
             FL: RSFZ_Main.CN_FL,  // 风力
             HRQL: RSFZ_Main.CN_HRQL,  // 换热器液位
@@ -120,7 +129,8 @@
 
         };
         for (var keyName in dataObj) {
-            $('.' + keyName).text(dataObj[keyName].toFixed(2))
+            $('.' + keyName).text(dataObj[keyName].toFixed(2));
+            $('.' + keyName).parent().attr('data-attr', keyName)
         }
         //水箱的进度条
         $("#water").css("height", (RSFZ_Main.CN_L002.toFixed(2) / 10) * waterBoxBg + 'px');
@@ -450,6 +460,141 @@
         // RSFZ_Main.YHKC = Program.YHKC_get();
         // Program.TJQL_set(RSFZ_Main.TJQL);
         // RSFZ_Main.TJQL = Program.TJQL_get();
+
+        // console.log('====____=========')
+        $(document).trigger('changeData')
+    }
+
+    trendFun1("#G001")
+    trendFun1("#T001")
+    trendFun1("#P005")
+
+
+    var pointCount = 0; // 打了多少个点了
+    function trendFun1(children) {
+
+        //点击页面某个点显示弹窗
+        $(children).on('click', function () {
+
+            $(".popup").css('display', 'block')
+          
+            $(this).parent().addClass("active")
+
+            var keyName = $(this).attr("data-attr");
+            var dataAttr = []
+            // 初始化图表
+            echarts.init(document.getElementById('popupactual')).dispose(); // 销毁实例
+            getChart('popupactual', dataAttr)
+
+            // 监听数据变化
+            if (intervalID) {
+                // 同下 randomData 函数
+                function randomData() {
+                    return {
+                        value: [
+                            new Date(+new Date() + 1000),
+                            dataObj[keyName].toFixed(2)
+                        ]
+                    }
+                }
+
+                $(document).on('changeData', function (e) {
+                    pointCount++
+                    console.log(randomData(), "++++")
+                    if (pointCount >= 100) {
+                        dataAttr.shift();
+                        dataAttr.push(randomData())
+                    }
+                    dataAttr.push(randomData())
+                    console.log(dataAttr, "要传入的图表数据")
+
+                    getChart('popupactual', dataAttr)
+                })
+            }
+        });
+
+        //关闭弹窗
+        $("#close").click(function () {
+            console.log("关闭")
+            console.log(echarts.init(document.getElementById('popupactual')).dispose(),"@@@@@")
+            echarts.init(document.getElementById('popupactual')).dispose(); // 销毁实例
+            $(".popup").css('display', 'none')
+        })
+
+    }
+    function getChart(chartId, data) {
+       
+        myChartObj = echarts.init(document.getElementById(chartId));
+        var option = {
+            color: ['#ffff00', '#55b2f9', '#e687b6', '#55f9c9', '#759aa0', '#e69d87', '#8dc1a9', '#ea7e53'],
+            legend: {
+                top: '0',
+                textStyle: {
+                    color: '#ffffff',
+                    fontSize: nowSize(16)
+                },
+            },
+            grid: {
+                top: '30',
+                left: '60',
+                right: '30',
+                bottom: '80',
+            },
+            lineStyle: {
+                width: 1
+            },
+            xAxis: {
+                type: 'time',
+                axisLabel: {
+                    textStyle: {
+                        color: '#ffffff',
+                        fontSize: nowSize(16)
+                    }
+                },
+                axisLine: {
+                    lineStyle: {
+                        color: '#fff',     //X轴的颜色
+                    },
+                },
+                splitLine: {
+                    show: false
+                }
+            },
+            yAxis: {
+                type: 'value',
+                boundaryGap: [0, '100%'],
+                splitLine: {
+                    show: false
+                },
+                axisLabel: {
+                    show: true,
+                    textStyle: {
+                        color: '#ffffff',
+                        fontSize: nowSize(16)
+                    },
+                },
+                axisLine: {
+                    lineStyle: {
+                        color: '#fff'     //X轴的颜色
+                    },
+                },
+            },
+            series: [{
+                // name: '模拟数据',
+                type: 'line',
+                showSymbol: true,
+                hoverAnimation: false,
+                data: data
+            }]
+        };
+        // myChartObj.clear();
+        
+        if (option && typeof option === "object") {  // 如果获取到了数据且数据是对象，DetectRecordCurveInfo 是父组件传来的可用的数据信息
+            myChartObj.setOption(option);
+
+        }
+        
+
     }
     // 点击阀门开度弹出一个输入框,输入开度，然后再提交
     promptFun("#aperture")
