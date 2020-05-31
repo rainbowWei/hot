@@ -111,7 +111,7 @@
     -webkit-appearance: none;
     margin:0 0.78vw 0 1.3vw;
   }
-  .square-check>input[type="checkbox"]::before {
+  .square-check>input[type="checkbox"]:after {
     content: "";
     position: absolute;
     top: 0;
@@ -125,12 +125,12 @@
     color: #fff;
     border-radius: 3px;
   }
-  .square-check>input[type="checkbox"]:hover::before {
+  .square-check>input[type="checkbox"]:hover:after {
     /* border-color: #01f2c7; */
     background: url(../images/2.png);
     background-size: 100% 100%;
   }
-  .square-check>input[type="checkbox"]:checked::before {
+  .square-check>input[type="checkbox"]:checked:after {
     /* content: "\2713";
     background-color: #01f2c7;
     border: 0.09vh solid #01f2c7;
