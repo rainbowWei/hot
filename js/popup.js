@@ -18,15 +18,14 @@ $(document).ready(function () {
     //7.获取当前对象的所有同级元素的集合，并隐藏
     $eq.siblings('div').removeClass("showcontent").css("z-index", parseInt(Zindex) - 1);
   });
- 
+
   //当前视口宽度
-  let nowClientWidth = document.documentElement.clientWidth;
+  var nowClientWidth = document.documentElement.clientWidth;
   //换算方法
   function nowSize(val) {
     return val * (nowClientWidth / 1920);
   }
 
- 
   getChart1('popuphistory')
 
   function getChart1(chartId) {
@@ -182,4 +181,317 @@ $(document).ready(function () {
       myChartObj2.resize();
     });
   }
+
+  // 多条曲线的各种参数
+  var chartObj = {};
+  //点击设置按钮
+  var colorCount = 0;
+  // 曲线颜色
+  var COLOR = [
+    { used: false, value: '#ffff00' },
+    { used: false, value: '#55b2f9' },
+    { used: false, value: '#e687b6' },
+    { used: false, value: '#55f9c9' },
+    { used: false, value: '#759aa0' },
+    { used: false, value: '#e69d87' },
+    { used: false, value: '#8dc1a9' },
+    { used: false, value: '#ea7e53' }
+  ];
+
+  // 获取线条颜色
+  function getColor(type, oldColor) {
+    var tempColor = void 0;
+    if (type === 'get') {
+      for (var i = 0; i < COLOR.length; i++) {
+        var co = COLOR[i];
+        if (!co.used) {
+          tempColor = co.value;
+          co.used = true;
+          colorCount++;
+          break;
+        }
+      }
+    } else if (type === 'del') {
+      for (var i = 0; i < COLOR.length; i++) {
+        var co = COLOR[i];
+        if (oldColor === co.value) {
+          co.used = false
+          break;
+        }
+      }
+      colorCount--;
+    }
+    return tempColor;
+  }
+
+  function handler(keyName, checked, _this) {
+
+    // 判断是实时数据的话
+    if (true) {
+
+      if (checked) {
+
+        var tempColor = getColor('get');
+        chartObj[keyName] = {
+          name: $(_this).next().text(),
+          key: keyName,
+          data: [],
+          pointCount: 0,
+          color: tempColor,
+          other: '其他别的啥参数'
+        }
+        // 最多可选8个指标
+        if (colorCount > 8) {
+          alert("最多只能选8个指标")
+          _this.checked = false;
+          return;
+        }
+        $(_this).parent().css({
+          color: tempColor
+        });
+      } else {
+        // 画曲线
+        for (var k in chartObj) {
+          if (chartObj.hasOwnProperty(k)) {
+            if (k == keyName) {
+              var tempColor = getColor('del', chartObj[k].color)
+              $(_this).parent().css({
+                color: '#fff'
+              });
+              delete chartObj[k]
+            }
+          }
+        }
+      }
+    }
+  }
+  function trendFun1(children) {
+    //点击页面某个点显示弹窗
+    $(children).on('click', function () {
+
+      $(".popup").css('display', 'block')
+      $(this).parent().addClass("active")
+
+      var keyName2 = $(this).attr("data-attr");
+
+      var onOff4 = 1;
+      $("#setBtn").on('click', function () {
+        if (onOff4 == 1) {
+          $('.setpopup').css('display', 'block')
+          $('input[data-keyName]').prop('checked', false);
+          onOff4 = 0;
+
+          // 画曲线
+          for (var k in chartObj) {
+            if (chartObj.hasOwnProperty(k)) {
+              $('input[data-keyName=' + k + ']').prop('checked', true).parent().css({
+                color: chartObj[k].color
+              });
+            }
+          }
+        } else {
+          console.log('==================>>>>>>')
+          var selected = new Array();
+          $("input[name=setvalue]").each(function (i, d) {
+            if (d.checked) {
+              selected.push(d.value);
+            }
+          })
+          // alert(selected, "存储的值")
+          onOff4 = 1;
+          $('.setpopup').css('display', 'none')
+        }
+      })
+
+      var myChartObj = echarts.init(document.getElementById('popupactual'));
+      /**
+       * 监听数据变化
+       * window.intervalID 来自 index.js 文件中的定时器
+       */
+      if (window.intervalID) {
+        var tempColor = getColor('get');
+        chartObj[keyName2] = {
+          name: $('input[data-keyName=' + keyName2 + ']').next().text(),
+          key: keyName2,
+          data: [],
+          pointCount: 0,
+          color: tempColor,
+          other: '其他别的啥参数'
+        }
+
+        // 监听数据变化
+        $(document).on('changeData', function (e, dataObj) {
+          // 同下 randomData 函数
+          function randomData(key) {
+            return {
+              value: [
+                new Date(+new Date() + 1000),
+                dataObj[key].toFixed(2)
+              ]
+            }
+          }
+          for (var prop in chartObj) {
+            if (chartObj.hasOwnProperty(prop)) {
+              var obj = chartObj[prop]
+              obj.pointCount++;
+              if (obj.pointCount >= 10) {
+                obj.data.shift();
+              }
+              obj.data.push(randomData(obj.key));
+            }
+          }
+          getChart(myChartObj, setChartLine(chartObj))
+        })
+
+        // 监听右侧checkbox选择
+        $("input[data-keyName]").on('click', function () {
+          handler(this.value, this.checked, this);
+        })
+      }
+
+      //关闭弹窗
+      $("#close").click(function () {
+        // 取消数据变化监听
+        $(document).off('changeData')
+
+        // 重新绘制echart折线图
+        var myChartObj = echarts.init(document.getElementById('popupactual'));
+        chartObj = {}
+        getChart(myChartObj, setChartLine(chartObj));
+
+
+        // 将所有备选颜色值变成未使用过
+        for (var i = 0; i < COLOR.length; i++) {
+          var co = COLOR[i]
+          co.used = false;
+        }
+        colorCount = 0;
+        console.log(colorCount,"颜色点")
+        // 将所有设置弹窗中指标变成未选中状态
+        $('input[data-keyName]').prop('checked', false).parent().css({
+          color: '#fff'
+        });
+        // 关闭设置弹窗
+        onOff4 = 1;
+        $('.setpopup').css('display', 'none');
+        // 关闭弹窗
+        $(".popup").css('display', 'none')
+      })
+    });
+  }
+
+  // 设置折线图需要使用的配置参数 series
+  function setChartLine(chartObj) {
+    var series = []
+    for (var type in chartObj) {
+      if (chartObj.hasOwnProperty(type)) {
+        series.push({
+          name: chartObj[type].name,
+          type: 'line',
+          symbol: 'circle',
+          showSymbol: true,
+          hoverAnimation: false,
+          data: chartObj[type].data,
+          color: chartObj[type].color
+        })
+      }
+    }
+    return series
+  }
+  function getChart(myChartObj, series) {
+    // console.log(JSON.stringify(series.length), '=============')
+    console.log(JSON.stringify(series[0] && series[0].data.length), '=============')
+    var option = {
+      legend: {
+        top: '0',
+        textStyle: {
+          color: '#ffffff',
+          fontSize: nowSize(16)
+        },
+      },
+      grid: {
+        top: '30',
+        left: '60',
+        right: '30',
+        bottom: '80',
+      },
+      lineStyle: {
+        width: 1
+      },
+      xAxis: {
+        type: 'time',
+        axisLabel: {
+          textStyle: {
+            color: '#ffffff',
+            fontSize: nowSize(16)
+          }
+        },
+        axisLine: {
+          lineStyle: {
+            color: '#fff',     //X轴的颜色
+          },
+        },
+        splitLine: {
+          show: false
+        }
+      },
+      yAxis: {
+        type: 'value',
+        boundaryGap: [0, '100%'],
+        splitLine: {
+          show: false
+        },
+        axisLabel: {
+          show: true,
+          textStyle: {
+            color: '#ffffff',
+            fontSize: nowSize(16)
+          },
+          formatter: function (value) {
+            if (value <= 1) {
+              return value * 100 / 200 + "%";
+            }
+            if (value >= 1 && value <= 20) {
+              return value * 100 / 500 + "%";
+            }
+            return value + "%";
+          }
+        },
+        axisLine: {
+          lineStyle: {
+            color: '#fff'     //X轴的颜色
+          },
+        },
+      },
+      series: series
+    };
+
+    if (option && typeof option === "object") {  // 如果获取到了数据且数据是对象，DetectRecordCurveInfo 是父组件传来的可用的数据信息
+      myChartObj.setOption(option, true);
+    }
+  }
+
+  // 监听指标
+  trendFun1("#G001")
+  trendFun1("#T001")
+  trendFun1("#G002")
+  trendFun1("#P002")
+  trendFun1("#T002")
+  trendFun1("#G003")
+  trendFun1("#P003")
+  trendFun1("#T003")
+  trendFun1("#G004")
+  trendFun1("#P004")
+  trendFun1("#T004")
+  trendFun1("#G005")
+  trendFun1("#P006")
+  trendFun1("#T006")
+  trendFun1("#P007")
+  trendFun1("#T007")
+  trendFun1("#G006")
+  trendFun1("#P008")
+  trendFun1("#T008")
+  trendFun1("#G007")
+  trendFun1("#P005")
+  trendFun1("#T005")
 })
