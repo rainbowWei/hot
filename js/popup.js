@@ -280,14 +280,13 @@ $(document).ready(function () {
           $('.setpopup').css('display', 'block')
           $('input[data-keyName]').prop('checked', false);
           onOff4 = 0;
-
+          colorCount++;
           // 画曲线
           for (var k in chartObj) {
             if (chartObj.hasOwnProperty(k)) {
               $('input[data-keyName=' + k + ']').prop('checked', true).parent().css({
                 color: chartObj[k].color
               });
-              colorCount++;
             }
           }
         } else {
@@ -297,8 +296,9 @@ $(document).ready(function () {
               selected.push(d.value);
             }
           })
-          // alert(selected, "存储的值")
+          console.log(selected, "存储的值")
           onOff4 = 1;
+          colorCount--;
           $('.setpopup').css('display', 'none')
         }
       })
