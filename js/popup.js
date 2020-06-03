@@ -197,6 +197,7 @@ $(document).ready(function () {
     { used: false, value: '#8dc1a9' },
     { used: false, value: '#ea7e53' }
   ];
+  var myChartObj = null;
 
   // 获取线条颜色
   function getColor(type, oldColor) {
@@ -225,26 +226,26 @@ $(document).ready(function () {
   }
 
   function handler(keyName, checked, _this) {
-
     // 判断是实时数据的话
     if (true) {
-
       if (checked) {
+        // 最多可选8个指标
+        console.log(colorCount, "colorCount")
+        if (colorCount > 8) {
+          _this.checked = false;
+          alert("最多只能选8个指标")
+          return;
+        }
 
         var tempColor = getColor('get');
+        // console.log(tempColor,"选中右侧的添加曲线")
         chartObj[keyName] = {
-          name: $(_this).next().text(),
+          name: $(_this).siblings('span').text(),
           key: keyName,
           data: [],
           pointCount: 0,
           color: tempColor,
           other: '其他别的啥参数'
-        }
-        // 最多可选8个指标
-        if (colorCount > 8) {
-          alert("最多只能选8个指标")
-          _this.checked = false;
-          return;
         }
         $(_this).parent().css({
           color: tempColor
@@ -273,7 +274,6 @@ $(document).ready(function () {
       $(this).parent().addClass("active")
 
       var keyName2 = $(this).attr("data-attr");
-
       var onOff4 = 1;
       $("#setBtn").on('click', function () {
         if (onOff4 == 1) {
@@ -287,10 +287,10 @@ $(document).ready(function () {
               $('input[data-keyName=' + k + ']').prop('checked', true).parent().css({
                 color: chartObj[k].color
               });
+              colorCount++;
             }
           }
         } else {
-          console.log('==================>>>>>>')
           var selected = new Array();
           $("input[name=setvalue]").each(function (i, d) {
             if (d.checked) {
@@ -303,15 +303,18 @@ $(document).ready(function () {
         }
       })
 
-      var myChartObj = echarts.init(document.getElementById('popupactual'));
       /**
        * 监听数据变化
        * window.intervalID 来自 index.js 文件中的定时器
        */
+      if (!myChartObj) {
+        myChartObj = echarts.init(document.getElementById('popupactual'));
+      }
       if (window.intervalID) {
+
         var tempColor = getColor('get');
         chartObj[keyName2] = {
-          name: $('input[data-keyName=' + keyName2 + ']').next().text(),
+          name: $('input[data-keyName=' + keyName2 + ']').siblings('span').text(),
           key: keyName2,
           data: [],
           pointCount: 0,
@@ -334,7 +337,7 @@ $(document).ready(function () {
             if (chartObj.hasOwnProperty(prop)) {
               var obj = chartObj[prop]
               obj.pointCount++;
-              if (obj.pointCount >= 10) {
+              if (obj.pointCount >= 100) {
                 obj.data.shift();
               }
               obj.data.push(randomData(obj.key));
@@ -354,11 +357,8 @@ $(document).ready(function () {
         // 取消数据变化监听
         $(document).off('changeData')
 
-        // 重新绘制echart折线图
-        var myChartObj = echarts.init(document.getElementById('popupactual'));
         chartObj = {}
         getChart(myChartObj, setChartLine(chartObj));
-
 
         // 将所有备选颜色值变成未使用过
         for (var i = 0; i < COLOR.length; i++) {
@@ -366,13 +366,14 @@ $(document).ready(function () {
           co.used = false;
         }
         colorCount = 0;
-        console.log(colorCount,"颜色点")
         // 将所有设置弹窗中指标变成未选中状态
-        $('input[data-keyName]').prop('checked', false).parent().css({
+        $('input[data-keyName]').prop('checked', false).off('click').parent().css({
           color: '#fff'
         });
         // 关闭设置弹窗
         onOff4 = 1;
+        $("#setBtn").off('click');
+        $('#close').off('click');
         $('.setpopup').css('display', 'none');
         // 关闭弹窗
         $(".popup").css('display', 'none')
@@ -392,15 +393,14 @@ $(document).ready(function () {
           showSymbol: true,
           hoverAnimation: false,
           data: chartObj[type].data,
-          color: chartObj[type].color
+          color: chartObj[type].color,
+
         })
       }
     }
     return series
   }
   function getChart(myChartObj, series) {
-    // console.log(JSON.stringify(series.length), '=============')
-    console.log(JSON.stringify(series[0] && series[0].data.length), '=============')
     var option = {
       legend: {
         top: '0',
