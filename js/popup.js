@@ -326,10 +326,30 @@ $(document).ready(function () {
         $(document).on('changeData', function (e, dataObj) {
           // 同下 randomData 函数
           function randomData(key) {
+            //将各指标转化成一个范围（1-100）之内的数据
+            var data = null;
+            //流量(0~1000)
+            if (key == 'CN_G001' || key == 'CN_G002' || key == 'CN_G003' || key == 'CN_G004' || key == 'CN_G005' || key == 'CN_G006' || key == 'CN_G007') {
+              data = ((dataObj[key].toFixed(0) - (0)) / (1000 - (0))) * 100;
+            }
+            //温度(-10~400)
+            if (key == 'CN_T001' || key == 'CN_T002' || key == 'CN_T003' || key == 'CN_T004' || key == 'CN_T005' || key == 'CN_T006' || key == 'CN_T007' || key == 'CN_T008') {
+              data = ((dataObj[key].toFixed(0) - (-10)) / (400 - (-10))) * 100;
+            }
+            //压力(0~3)
+            if (key == 'CN_P002' || key == 'CN_P003' || key == 'CN_P004' || key == 'CN_P005' || key == 'CN_P006' || key == 'CN_P007' || key == 'CN_P008') {
+              data = ((dataObj[key].toFixed(0) - (0)) / (3 - (0))) * 100;
+            }
+            //压力(0~3)
+            if (key == 'CN_L002') {
+              console.log(dataObj[key].toFixed(2),"水箱")
+              console.log("1111")
+              data = ((dataObj[key].toFixed(2) - (0)) / (10 - (0))) * 100;
+            }
             return {
               value: [
                 new Date(+new Date() + 1000),
-                dataObj[key].toFixed(2)
+                data
               ]
             }
           }
@@ -337,7 +357,7 @@ $(document).ready(function () {
             if (chartObj.hasOwnProperty(prop)) {
               var obj = chartObj[prop]
               obj.pointCount++;
-              if (obj.pointCount >= 100) {
+              if (obj.pointCount >= 120) {
                 obj.data.shift();
               }
               obj.data.push(randomData(obj.key));
@@ -390,7 +410,7 @@ $(document).ready(function () {
           name: chartObj[type].name,
           type: 'line',
           symbol: 'circle',
-          showSymbol: true,
+          showSymbol: false,
           hoverAnimation: false,
           data: chartObj[type].data,
           color: chartObj[type].color,
@@ -437,7 +457,8 @@ $(document).ready(function () {
       },
       yAxis: {
         type: 'value',
-        boundaryGap: [0, '100%'],
+        max: 100,
+        min: 0,
         splitLine: {
           show: false
         },
@@ -448,12 +469,6 @@ $(document).ready(function () {
             fontSize: nowSize(16)
           },
           formatter: function (value) {
-            if (value <= 1) {
-              return value * 100 / 200 + "%";
-            }
-            if (value >= 1 && value <= 20) {
-              return value * 100 / 500 + "%";
-            }
             return value + "%";
           }
         },
@@ -472,26 +487,27 @@ $(document).ready(function () {
   }
 
   // 监听指标
-  trendFun1("#G001")
-  trendFun1("#T001")
-  trendFun1("#G002")
-  trendFun1("#P002")
-  trendFun1("#T002")
-  trendFun1("#G003")
-  trendFun1("#P003")
-  trendFun1("#T003")
-  trendFun1("#G004")
-  trendFun1("#P004")
-  trendFun1("#T004")
-  trendFun1("#G005")
-  trendFun1("#P006")
-  trendFun1("#T006")
-  trendFun1("#P007")
-  trendFun1("#T007")
-  trendFun1("#G006")
-  trendFun1("#P008")
-  trendFun1("#T008")
-  trendFun1("#G007")
-  trendFun1("#P005")
-  trendFun1("#T005")
+  trendFun1("#CN_G001")
+  trendFun1("#CN_T001")
+  trendFun1("#CN_G002")
+  trendFun1("#CN_P002")
+  trendFun1("#CN_T002")
+  trendFun1("#CN_G003")
+  trendFun1("#CN_P003")
+  trendFun1("#CN_T003")
+  trendFun1("#CN_G004")
+  trendFun1("#CN_P004")
+  trendFun1("#CN_T004")
+  trendFun1("#CN_G005")
+  trendFun1("#CN_P006")
+  trendFun1("#CN_T006")
+  trendFun1("#CN_P007")
+  trendFun1("#CN_T007")
+  trendFun1("#CN_G006")
+  trendFun1("#CN_P008")
+  trendFun1("#CN_T008")
+  trendFun1("#CN_G007")
+  trendFun1("#CN_P005")
+  trendFun1("#CN_T005")
+  trendFun1("#CN_L002")
 })

@@ -96,7 +96,6 @@
     }
     //水箱的进度条
     $("#water").css("height", (RSFZ_Main.CN_L002.toFixed(2) / 10) * waterBoxBg + 'px');
-    $(".stage .number").text(RSFZ_Main.CN_L002.toFixed(2));
     //控制性能指标的进度条
     $("#progress").css("width", (RSFZ_Main.ZHZB.toFixed(2) / 100) * progressBg + 'px');
 
@@ -718,34 +717,34 @@
   // Program.main();
   function setDataObj(RSFZ_Main) {
     return {
-      T010: RSFZ_Main.CN_T010,  // 天气温度
+      CN_T010: RSFZ_Main.CN_T010,  // 天气温度
       FL: RSFZ_Main.CN_FL,  // 风力
-      HRQL: RSFZ_Main.CN_HRQL,  // 换热器液位
-      T009: RSFZ_Main.CN_T009,  // 室内温度
-      P001: RSFZ_Main.CN_P001,  // 蒸汽压力
-      G001: RSFZ_Main.CN_G001,  // 蒸汽流量
-      T001: RSFZ_Main.CN_T001,  // 蒸汽温度
-      G002: RSFZ_Main.CN_G002,  // 流量
-      P002: RSFZ_Main.CN_P002,  // 压力
-      T002: RSFZ_Main.CN_T002,  // 温度
-      G003: RSFZ_Main.CN_G003,  // 疏水流量
-      P003: RSFZ_Main.CN_P003,  // 疏水压力
-      T003: RSFZ_Main.CN_T003,  // 疏水温度
-      G004: RSFZ_Main.CN_G004,  // 进水流量
-      P004: RSFZ_Main.CN_P004,  // 进水压力
-      T004: RSFZ_Main.CN_T004,  // 进水温度
-      G005: RSFZ_Main.CN_G005,  // 热水流量
-      P005: RSFZ_Main.CN_P005,  // 阀前热水压力
-      T005: RSFZ_Main.CN_T005,  // 阀前热水温度
-      G006: RSFZ_Main.CN_G006,  // 回水流量
-      P006: RSFZ_Main.CN_P006,  // 阀后热水压力
-      T006: RSFZ_Main.CN_T006,  // 阀后热水温度
-      G007: RSFZ_Main.CN_G007,  // 补水流量
-      P007: RSFZ_Main.CN_P007,  // 补水压力
-      T007: RSFZ_Main.CN_T007,  // 补水温度
-      P008: RSFZ_Main.CN_P008,  // 回水压力
-      T008: RSFZ_Main.CN_T008,  // 回水温度
-      L002: RSFZ_Main.CN_L002,  // 水箱液位
+      CN_HRQL: RSFZ_Main.CN_HRQL,  // 换热器液位
+      CN_T009: RSFZ_Main.CN_T009,  // 室内温度
+      CN_P001: RSFZ_Main.CN_P001,  // 蒸汽压力
+      CN_G001: RSFZ_Main.CN_G001,  // 蒸汽流量
+      CN_T001: RSFZ_Main.CN_T001,  // 蒸汽温度
+      CN_G002: RSFZ_Main.CN_G002,  // 流量
+      CN_P002: RSFZ_Main.CN_P002,  // 压力
+      CN_T002: RSFZ_Main.CN_T002,  // 温度
+      CN_G003: RSFZ_Main.CN_G003,  // 疏水流量
+      CN_P003: RSFZ_Main.CN_P003,  // 疏水压力
+      CN_T003: RSFZ_Main.CN_T003,  // 疏水温度
+      CN_G004: RSFZ_Main.CN_G004,  // 进水流量
+      CN_P004: RSFZ_Main.CN_P004,  // 进水压力
+      CN_T004: RSFZ_Main.CN_T004,  // 进水温度
+      CN_G005: RSFZ_Main.CN_G005,  // 热水流量
+      CN_P005: RSFZ_Main.CN_P005,  // 阀前热水压力
+      CN_T005: RSFZ_Main.CN_T005,  // 阀前热水温度
+      CN_G006: RSFZ_Main.CN_G006,  // 回水流量
+      CN_P006: RSFZ_Main.CN_P006,  // 阀后热水压力
+      CN_T006: RSFZ_Main.CN_T006,  // 阀后热水温度
+      CN_G007: RSFZ_Main.CN_G007,  // 补水流量
+      CN_P007: RSFZ_Main.CN_P007,  // 补水压力
+      CN_T007: RSFZ_Main.CN_T007,  // 补水温度
+      CN_P008: RSFZ_Main.CN_P008,  // 回水压力
+      CN_T008: RSFZ_Main.CN_T008,  // 回水温度
+      CN_L002: RSFZ_Main.CN_L002,  // 水箱液位
       PTMIN: RSFZ_Main.CN_PTMIN,  // 网管温度下限
       TEA_PJ: RSFZ_Main.TEA_PJ,  // 天气温度平均值
       TEA_MAX: RSFZ_Main.TEA_MAX,  // 天气温度最高值
