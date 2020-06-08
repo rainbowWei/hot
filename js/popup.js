@@ -182,9 +182,16 @@ $(document).ready(function () {
     });
   }
 
+  ////////////////////////////////////////////////////////////
+  ///                                                      ///
+  ///                                                      ///
+  ///                     实时曲线代码                      ///
+  ///                                                      ///
+  ///                                                      ///
+  ////////////////////////////////////////////////////////////
   // 多条曲线的各种参数
   var chartObj = {};
-  //点击设置按钮
+  // 颜色被使用了多少条
   var colorCount = 0;
   // 曲线颜色
   var COLOR = [
@@ -197,22 +204,25 @@ $(document).ready(function () {
     { used: false, value: '#8dc1a9' },
     { used: false, value: '#ea7e53' }
   ];
+  // 实时曲线实例
   var myChartObj = null;
 
   // 获取线条颜色
   function getColor(type, oldColor) {
     var tempColor = void 0;
     if (type === 'get') {
+      colorCount++;
       for (var i = 0; i < COLOR.length; i++) {
         var co = COLOR[i];
         if (!co.used) {
           tempColor = co.value;
           co.used = true;
-          colorCount++;
           break;
         }
       }
     } else if (type === 'del') {
+      console.log('del===', colorCount)
+      colorCount--;
       for (var i = 0; i < COLOR.length; i++) {
         var co = COLOR[i];
         if (oldColor === co.value) {
@@ -220,7 +230,6 @@ $(document).ready(function () {
           break;
         }
       }
-      colorCount--;
     }
     return tempColor;
   }
@@ -229,15 +238,16 @@ $(document).ready(function () {
     // 判断是实时数据的话
     if (true) {
       if (checked) {
+        var tempColor = getColor('get');
         // 最多可选8个指标
         console.log(colorCount, "colorCount")
         if (colorCount > 8) {
           _this.checked = false;
           alert("最多只能选8个指标")
+          colorCount--;
           return;
         }
 
-        var tempColor = getColor('get');
         // console.log(tempColor,"选中右侧的添加曲线")
         chartObj[keyName] = {
           name: $(_this).siblings('span').text(),
@@ -259,11 +269,12 @@ $(document).ready(function () {
               $(_this).parent().css({
                 color: '#fff'
               });
-              delete chartObj[k]
+              delete chartObj[k];
             }
           }
         }
       }
+      setSocketEcharts(myChartObj, setChartLine(chartObj), true);
     }
   }
   function trendFun1(children) {
@@ -280,7 +291,6 @@ $(document).ready(function () {
           $('.setpopup').css('display', 'block')
           $('input[data-keyName]').prop('checked', false);
           onOff4 = 0;
-          colorCount++;
           // 画曲线
           for (var k in chartObj) {
             if (chartObj.hasOwnProperty(k)) {
@@ -298,7 +308,6 @@ $(document).ready(function () {
           })
           console.log(selected, "存储的值")
           onOff4 = 1;
-          colorCount--;
           $('.setpopup').css('display', 'none')
         }
       })
@@ -309,9 +318,10 @@ $(document).ready(function () {
        */
       if (!myChartObj) {
         myChartObj = echarts.init(document.getElementById('popupactual'));
+        // 初始化弹窗实时数据echarts
+        setSocketEcharts(myChartObj, [], true);
       }
       if (window.intervalID) {
-
         var tempColor = getColor('get');
         chartObj[keyName2] = {
           name: $('input[data-keyName=' + keyName2 + ']').siblings('span').text(),
@@ -333,15 +343,15 @@ $(document).ready(function () {
               data = ((dataObj[key].toFixed(0) - (0)) / (1000 - (0))) * 100;
             }
             //温度(-10~400)
-            if (key == 'CN_T001' || key == 'CN_T002' || key == 'CN_T003' || key == 'CN_T004' || key == 'CN_T005' || key == 'CN_T006' || key == 'CN_T007' || key == 'CN_T008') {
+            else if (key == 'CN_T001' || key == 'CN_T002' || key == 'CN_T003' || key == 'CN_T004' || key == 'CN_T005' || key == 'CN_T006' || key == 'CN_T007' || key == 'CN_T008') {
               data = ((dataObj[key].toFixed(0) - (-10)) / (400 - (-10))) * 100;
             }
             //压力(0~3)
-            if (key == 'CN_P002' || key == 'CN_P003' || key == 'CN_P004' || key == 'CN_P005' || key == 'CN_P006' || key == 'CN_P007' || key == 'CN_P008') {
+            else if (key == 'CN_P002' || key == 'CN_P003' || key == 'CN_P004' || key == 'CN_P005' || key == 'CN_P006' || key == 'CN_P007' || key == 'CN_P008') {
               data = ((dataObj[key].toFixed(0) - (0)) / (3 - (0))) * 100;
             }
             //压力(0~3)
-            if (key == 'CN_L002') {
+            else if (key == 'CN_L002') {
               console.log(dataObj[key].toFixed(2),"水箱")
               console.log("1111")
               data = ((dataObj[key].toFixed(2) - (0)) / (10 - (0))) * 100;
@@ -349,6 +359,7 @@ $(document).ready(function () {
             return {
               value: [
                 new Date(+new Date() + 1000),
+                // Math.random() * 100
                 data
               ]
             }
@@ -357,13 +368,14 @@ $(document).ready(function () {
             if (chartObj.hasOwnProperty(prop)) {
               var obj = chartObj[prop]
               obj.pointCount++;
-              if (obj.pointCount >= 120) {
+              if (obj.pointCount >= 1200) {
                 obj.data.shift();
               }
               obj.data.push(randomData(obj.key));
             }
           }
-          getChart(myChartObj, setChartLine(chartObj))
+
+          setSocketEcharts(myChartObj, setChartLine(chartObj), false)
         })
 
         // 监听右侧checkbox选择
@@ -375,10 +387,11 @@ $(document).ready(function () {
       //关闭弹窗
       $("#close").click(function () {
         // 取消数据变化监听
-        $(document).off('changeData')
-
-        chartObj = {}
-        getChart(myChartObj, setChartLine(chartObj));
+        $(document).off('changeData');
+        
+        // 清空实时数据的所有曲线
+        chartObj = {};
+        setSocketEcharts(myChartObj, [], true);
 
         // 将所有备选颜色值变成未使用过
         for (var i = 0; i < COLOR.length; i++) {
@@ -413,14 +426,14 @@ $(document).ready(function () {
           showSymbol: false,
           hoverAnimation: false,
           data: chartObj[type].data,
-          color: chartObj[type].color,
-
+          color: chartObj[type].color
         })
       }
     }
     return series
   }
-  function getChart(myChartObj, series) {
+  // 设置弹窗实时数据echarts
+  function setSocketEcharts(myChartObj, series, merge) {
     var option = {
       legend: {
         top: '0',
@@ -480,9 +493,14 @@ $(document).ready(function () {
       },
       series: series
     };
-
-    if (option && typeof option === "object") {  // 如果获取到了数据且数据是对象，DetectRecordCurveInfo 是父组件传来的可用的数据信息
-      myChartObj.setOption(option, true);
+    if (option && typeof option === 'object') {
+      if (!merge) {
+        myChartObj.setOption(option);
+      } else {
+        myChartObj.setOption({
+          series: series
+        },true);
+      }
     }
   }
 

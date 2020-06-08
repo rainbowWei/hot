@@ -10,9 +10,50 @@
     return val * (nowClientWidth / 1920);
   }
 
-  var myChart;
-  var myChart2;
-  var myChart3;
+  // 热水温度稳态占比
+  var myChart = echarts.init(document.getElementById('hotw'));
+  // 室内温度达标率
+  var myChart2 = echarts.init(document.getElementById('circle'));
+  // 先控自动占比
+  var myChart3 = echarts.init(document.getElementById('sicon'));
+
+  //环状图表初始化(假数据默认的时候显示)
+  //热水温度稳态占比
+  onWaterChange({
+    color: ['#f553ab', '#6c6b6f'],
+    data: [
+      { value: 40 },
+      { value: 100 }
+    ],
+    myChart: myChart,
+    notMerge: true
+  });
+  // 室内温度达标率
+  onWaterChange({
+    color: ['#ff9519', '#6c6b6f'],
+    data: [
+      { value: 30 },
+      { value: 100 }
+    ],
+    myChart: myChart2,
+    notMerge: true
+  });
+  // 先控自动占比
+  onWaterChange({
+    color: ['#00ffff', '#6c6b6f'],
+    data: [
+      { value: 50 },
+      { value: 100 }
+    ],
+    myChart: myChart3,
+    notMerge: true
+  });
+  window.addEventListener("resize", function () {
+    myChart && myChart.resize();
+    myChart2 && myChart2.resize();
+    myChart3 && myChart3.resize();
+  });
+
   // 时钟
   setInterval(function () {
     var newDate = new Date();                // 获取当前时间
@@ -107,27 +148,28 @@
         { value: RSFZ_Main.RST_WTB },
         { value: 100 - RSFZ_Main.RST_WTB }
       ],
-      domId: 'hotw'
+      myChart: myChart,
+      notMerge: false
     });
-
     // 室内温度达标率
-    onWaterChange2({
+    onWaterChange({
       color: ['#ff9519', '#6c6b6f'],
       data: [
         { value: RSFZ_Main.SNT_WTB },
         { value: 100 - RSFZ_Main.SNT_WTB }
       ],
-      domId: 'circle'
+      myChart: myChart2,
+      notMerge: false
     });
-
     // 先控自动占比
-    onWaterChange3({
+    onWaterChange({
       color: ['#00ffff', '#6c6b6f'],
       data: [
         { value: RSFZ_Main.RSZKB },
         { value: 100 - RSFZ_Main.RSZKB }
       ],
-      domId: 'sicon'
+      myChart: myChart3,
+      notMerge: false
     });
 
     function x() {
@@ -562,39 +604,9 @@
 
   })
 
-
-  //图表(假数据默认的时候显示)
-  //热水温度稳态占比
-  onWaterChange({
-    color: ['#f553ab', '#6c6b6f'],
-    data: [
-      { value: 40 },
-      { value: 100 }
-    ],
-    domId: 'hotw'
-  });
-  // 室内温度达标率
-  onWaterChange2({
-    color: ['#ff9519', '#6c6b6f'],
-    data: [
-      { value: 30 },
-      { value: 100 }
-    ],
-    domId: 'circle'
-  });
-  // 先控自动占比
-  onWaterChange3({
-    color: ['#00ffff', '#6c6b6f'],
-    data: [
-      { value: 50 },
-      { value: 100 }
-    ],
-    domId: 'sicon'
-  });
-
-  //环状函数(封装成一个函数，控制台报警告：There is a chart instance already initialized on the dom.)
-  // 热水温度稳态占比
+  //环状函数
   function onWaterChange(obj) {
+    var myChart = obj.myChart;
     var option = {
       series: [
         {
@@ -622,96 +634,8 @@
         }
       ]
     };
-    if (myChart != null && myChart != "" && myChart != undefined) {
-      myChart.dispose();
-    }
-    // 基于准备好的dom，初始化echarts实例
-    myChart = echarts.init(document.getElementById(obj.domId));
     // 使用刚指定的配置项和数据显示图表
-    myChart.setOption(option);
-    window.addEventListener("resize", function () {
-      myChart.resize();
-    });
-  }
-  // 室内温度达标率
-  function onWaterChange2(obj) {
-    var option = {
-      series: [
-        {
-          type: 'pie',
-          radius: ['80%', '100%'],
-          // 禁用饼状图悬浮动画效果
-          animation: false,
-          color: obj.color,
-          data: obj.data,
-          label: {
-            show: true,
-            position: 'center',
-            formatter: function () {
-              var total = 0;
-              for (var i = 0; i < obj.data.length; i++) {
-                total += Number(obj.data[i].value);
-              }
-              return (obj.data[0].value * 100 / total).toFixed(0) + '%';
-            },
-            textStyle: {
-              fontSize: 10,
-              color: "#FFF"
-            }
-          }
-        }
-      ]
-    };
-    if (myChart2 != null && myChart2 != "" && myChart2 != undefined) {
-      myChart2.dispose();
-    }
-    // 基于准备好的dom，初始化echarts实例
-    myChart2 = echarts.init(document.getElementById(obj.domId));
-    // 使用刚指定的配置项和数据显示图表
-    myChart2.setOption(option);
-    window.addEventListener("resize", function () {
-      myChart2.resize();
-    });
-  }
-  // 先控自动占比
-  function onWaterChange3(obj) {
-    var option = {
-      series: [
-        {
-          type: 'pie',
-          radius: ['80%', '100%'],
-          // 禁用饼状图悬浮动画效果
-          animation: false,
-          color: obj.color,
-          data: obj.data,
-          label: {
-            show: true,
-            position: 'center',
-            formatter: function () {
-              var total = 0;
-              for (var i = 0; i < obj.data.length; i++) {
-                total += Number(obj.data[i].value);
-              }
-              return (obj.data[0].value * 100 / total).toFixed(0) + '%';
-            },
-            textStyle: {
-              fontSize: 10,
-              color: "#FFF"
-            }
-          }
-        }
-      ]
-    };
-    if (myChart3 != null && myChart3 != "" && myChart3 != undefined) {
-      myChart3.dispose();
-    }
-    // 基于准备好的dom，初始化echarts实例
-    myChart3 = echarts.init(document.getElementById(obj.domId));
-    // 使用刚指定的配置项和数据显示图表
-    myChart3.setOption(option);
-    window.addEventListener("resize", function () {
-      myChart3.resize();
-    });
+    myChart.setOption(option, obj.notMerge);
   }
 
   // Program.main();

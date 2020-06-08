@@ -1,5 +1,9 @@
+/*
+vw = 设计稿量出来的宽度 * 100 / 设计稿的宽度
+vh = 设计稿量出来的高度 * 100 / 设计稿的高度
+*/
 body{
-    background: url(../images/bg.jpg);
+    background: url('../images/bg.jpg');
     padding: 0 2vw;
 }
 .header{
@@ -26,7 +30,7 @@ body{
 .hcontent .logo{
    width: 7.34vw;
    height: 5.83vh;
-   background: url(../images/logo.png);
+   background: url('../images/logo.png');
    background-size: 100% 100%;
    position: absolute;
    bottom: -.2vh;
@@ -67,13 +71,13 @@ body{
    margin: 0 .5vw;
 }
 .hcontent .timetitle .statr:hover{
-   background: url(../images/start.png);
+   background: url('../images/start.png');
    background-size: 100% 100%;
 }
 .hcontent .timetitle .statr .icon{
    width: 5.28vh;
    height: 5.28vh;
-   background: url(../images/icon.png);
+   background: url('../images/icon.png');
    background-size: 100% 100%;
    margin-right: .5vw;
 }
@@ -88,7 +92,7 @@ body{
 .hcontent .time .icon{
    width: 5.28vh;
    height: 5.28vh;
-   background: url(../images/icon2.png);
+   background: url('../images/icon2.png');
    background-size: 100% 100%;
    margin-top: -1.1vh;
 }
@@ -116,14 +120,14 @@ body{
 .leftline{
    width: 0.57vw;
    height: 49.91vh;
-   background: url(../images/bg_line.png);
+   background: url('../images/bg_line.png');
    background-size: 100% 100%;
    margin: 13.89vh 0.47vw 0 0 ;
 }
 .left{
    width: 59.58vw;
    height: 100%;
-   background: url(../images/biankuang.png);
+   background: url('../images/biankuang.png');
    background-size: 100% 100%;
    position: relative;
 }
@@ -139,14 +143,14 @@ body{
    left: 2.92vw;
    font-size: 1.48vh;
    color: #fff;
-   background: url(../images/hot.png);
+   background: url('../images/hot.png');
    background-size: 100% 100%;
    z-index: 1000;
 }
 .hot .windsteam{
    width: 15.52vw;
    height: 14.35vh;
-   background: url(../images/windsteam.png);
+   background: url('../images/windsteam.png');
    background-size: 100% 100%;
    position: absolute;
    top:0.46vh;
@@ -192,7 +196,7 @@ body{
 .tappublic{
    width: 1.875vw;
    height: 4.72vh;
-   background: url(../images/tap.png);
+   background: url('../images/tap.png');
    background-size: 100% 100%;
    margin-bottom: 0.5vh;
 }
@@ -206,7 +210,7 @@ body{
 .information{
    width: 6.72vw;
    background: #565553;
-   background: url(../images/frame3.png);
+   background: url('../images/frame3.png');
    background-size: 100% 100%;
    font-size: 1.48vh;
    line-height: 2.5vh;
@@ -232,7 +236,7 @@ body{
    height: 100%;
    top: 0;
    left: 0;
-   background: url(../images/bg_radius.png) no-repeat;
+   background: url('../images/bg_radius.png') no-repeat;
    background-size: 100% 100%;
    transform: scale(1.1);
    transform-origin: center center;  
@@ -245,7 +249,7 @@ body{
    height: 100%;
    top: 0;
    left: 0;
-   background: url(../images/bg_radius3.png) no-repeat;
+   background: url('../images/bg_radius3.png') no-repeat;
    background-size: 100% 100%;
    transform: scale(1.1);
    transform-origin: center center;
@@ -255,7 +259,7 @@ body{
    height: 2.95vh;
    font-size: 1.48vh;
    position: relative;
-   background: url(../images/frame.png);
+   background: url('../images/frame.png');
    background-size: 100% 100%;
    
 }
@@ -367,7 +371,7 @@ body{
    width:43.28vw;
    height: 52.41vh;
    margin: 0 auto;
-   background: url(../images/cold.png);
+   background: url('../images/cold.png');
    background-size: 100% 100%;
    position: absolute;
    top: 24.07vh;
@@ -377,7 +381,7 @@ body{
 .hotmachine{
    width: 5.31vw;
    height: 19.17vh;
-   background: url(../images/hotmachine.png);
+   background: url('../images/hotmachine.png');
    background-size: 100% 100%;
    position: absolute;
    left: 31.94vw;
@@ -406,7 +410,7 @@ body{
 .house{
    width: 9.11vw;
    height: 12.78vh;
-   background: url(../images/house.png);
+   background: url('../images/house.png');
    background-size: 100% 100%;
    position: absolute;
    left: -3.8vw;
@@ -415,7 +419,7 @@ body{
 .connect{
    width: 6.09vw;
    height: 9.81vh;
-   background: url(../images/connect.png);
+   background: url('../images/connect.png');
    background-size: 100% 100%;
    position: absolute;
    right: 13.3vw;
@@ -446,33 +450,33 @@ body{
    left: .3vw;
 }
 .pumpswitch .on{
-   background: url(../images/on2.png);
+   background: url('../images/on2.png');
    background-size: 100% 100%;
 }
 .pumpswitch .on .icon{
-   background: url(../images/onicon.png);
+   background: url('../images/onicon.png');
    background-size: 100% 100%;
 }
 .pumpswitch .onactive .icon{
-   background: url(../images/onactive.png);
+   background: url('../images/onactive.png');
    background-size: 100% 100%;
 }
 .pumpswitch .off{
-   background: url(../images/off.png);
+   background: url('../images/off.png');
    background-size: 100% 100%;
 }
 .pumpswitch .off .icon{
-   background: url(../images/officon.png);
+   background: url('../images/officon.png');
    background-size: 100% 100%;
 }
 .pumpswitch .offactive .icon{
-   background: url(../images/offactive.png);
+   background: url('../images/offactive.png');
    background-size: 100% 100%;
 }
 .waterbox{
    width: 6.61vw;
    height: 12.04vh;
-   background: url(../images/waterbox.png);
+   background: url('../images/waterbox.png');
    background-size: 100% 100%;
    position: absolute;
    right: 8.2vw;
@@ -495,7 +499,7 @@ body{
    width: 5.31vw;
    height: 2.59vh;
    line-height: 2.59vh;
-   background: url(../images/water.png);
+   background: url('../images/water.png');
    background-size: 100% 100%;
    cursor: pointer;
 }
@@ -526,7 +530,7 @@ h1 b{
    height: 1.01vh;
    display: inline-block;
    margin-left: 1.2vw;
-   background: url(../images/title.png);
+   background: url('../images/title.png');
    background-size: 100% 100%;
 }
 h1 .btnlist{
@@ -544,18 +548,18 @@ h1 .btnlist{
 h1 .btnlist div{
    width: 4.53vw;
    height: 3.6vh;
-   background: url(../images/btn2.png);
+   background: url('../images/btn2.png');
    background-size: 100% 100%;
 }
 h1 .btnlist .on2{
-   background: url(../images/on3.png);
+   background: url('../images/on3.png');
    background-size: 100% 100%;
 }
 h1 .change{
    width: 8.96vw;
    height: 3.70vh;
    line-height: 3.70vh;
-   background: url(../images/change.png);
+   background: url('../images/change.png');
    background-size: 100% 100%;
    color: #fff;
    font-size: 1.48vh;
@@ -575,7 +579,7 @@ h1 .change div{
 h1 .change .on{
    width: 4.375vw;
    height: 3.7vh;
-   background: url(../images/on.png);
+   background: url('../images/on.png');
    background-size: 100% 100%;
 }
 .run .list li{
@@ -621,7 +625,7 @@ h1 .change .on{
    width: 100%;
    height: 4.54vh;
    line-height: 4.45vh;
-   background: url(../images/libg.png);
+   background: url('../images/libg.png');
    background-size: 100% 100%;
    margin-top: 0.35vh;
    font-size: 1.48vh;
@@ -708,13 +712,13 @@ h1 .change .on{
    padding-right: .6vw;
    box-sizing: border-box;
    text-align: right;
-   background: url(../images/btn.png);
+   background: url('../images/btn.png');
    background-size: 100% 100%;
    margin-top: 1.48vh;
    cursor: pointer;
 }
 .btn .show{
-   background: url(../images/active.png);
+   background: url('../images/active.png');
    background-size: 100% 100%;
 }
 .switch{
